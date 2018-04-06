@@ -1,0 +1,198 @@
+<html>
+<head>
+<title>
+Data
+</title>
+<script type="text/javascript">
+document.writeln("Дата последней модификации документа: " + document. lastModified) ; 
+</script>
+</head>
+<body bgcolor="silver">
+<h2>
+Data
+</h2>
+<p>
+<table align=left cellspacing=3 cellpadding=3>
+  <br>
+  <tr>
+    <td><input type=button id=prevpage value="<Prev Page" onclick="PagePrevious()"></td>
+    <td><input type=button id=nextpage value="Next Page>" onclick="PageNext()"></td>
+  </tr>
+</table>
+<br>
+<br>
+<br>
+<hr>
+
+<object id="vfpData"
+classid="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83"
+align="baseline" border="0" width="0" height="0"><param
+name="DataURL" value="data2.CSV"><param name="UseHeader"
+value="True"></object>
+
+
+<table id="tblvfpData" datasrc="#vfpData" datapagesize="10">
+<thead id="tblvfpdataheader">
+<tr>
+	<td><b><u><div id=museum>Название Музея</div></u></b></td>
+	<td><b><u><div id=country>Страна</div></u></b></td>
+	<td><b><u><div id=city>Город</div></u></b></td>
+	<td><b><u><div id=exhibit>Экспонат</div></u></b></td>
+	<td><b><u><div id=phone>Телефон Музея</div></u></b></td>
+	<td><b><u><div id=typeexhibit>Тип Экспоната</div></u></b></td>
+	<td><b><u><div id=author>Автор</div></u></b></td>
+	<td><b><u><div id=title>Название Выставки</div></u></b></td>
+	<td><b><u><div id=countrystart>Страна Выставки</div></u></b></td>
+	<td><b><u><div id=citystart>Город Выставки</div></u></b></td>
+	<td><b><u><div id=typeexhibition>Тип Выставки</div></u></b></td>
+	<td><b><u><div id=organizer>Организатор</div></u></b></td>
+	<td><b><u><div id=aim>Тематика Выставки</div></u></b></td>
+	<td><b><u><div id=year>Год Создания</div></u></b></td>
+	<td><b><u><div id=agecreate>Век Создания</div></u></b></td>
+	<td><b><u><div id=transfer>Год Передачи Музею</div></u></b></td>
+	<td><b><u><div id=money>Страховая Цена</div></u></b></td>
+	<td><b><u><div id=restoration>Год Реставрации</div></u></b></td>
+	<td><b><u><div id=account>Кол-во Посетителей</div></u></b></td>
+	<td><b><u><div id=interpreters>Подготовка Сотрудников</div></u></b></td>
+	<td><b><u><div id=stand>Подготовка Стенда</div></u></b></td>
+	<td><b><u><div id=transportation>Затраты На Транспортировку</div></u></b></td>
+	<td><b><u><div id=marketing>Маркетинговые Затраты</div></u></b></td>
+	<td><b><u><div id=datestart>Начало Выставки</div></u></b></td>
+	<td><b><u><div id=datefinish>Окончание Выставки</div></u></b></td>
+	<td><b><u><div id=private>Музей Частный?</div></u></b></td>
+</tr>
+</thead>
+<tbody>
+<tr onclick="selectrecord(this)">
+	<td align=left><span datafld="museum"></span></td>
+	<td align=left><span datafld="country"></span></td>
+	<td align=left><span datafld="city"></span></td>
+	<td align=left><span datafld="exhibit"></span></td>
+	<td align=left><span datafld="phone"></span></td>
+	<td align=left><span datafld="typeexhibit"></span></td>
+	<td align=left><span datafld="author"></span></td>
+	<td align=left><span datafld="title"></span></td>
+	<td align=left><span datafld="countrystart"></span></td>
+	<td align=left><span datafld="citystart"></span></td>
+	<td align=left><span datafld="typeexhibition"></span></td>
+	<td align=left><span datafld="organizer"></span></td>
+	<td align=left><span datafld="aim"></span></td>
+	<td align=left><span datafld="year"></span></td>
+	<td align=left><span datafld="agecreate"></span></td>
+	<td align=left><span datafld="transfer"></span></td>
+	<td align=left><span datafld="money"></span></td>
+	<td align=left><span datafld="restoration"></span></td>
+	<td align=left><span datafld="account"></span></td>
+	<td align=left><span datafld="interpreters"></span></td>
+	<td align=left><span datafld="stand"></span></td>
+	<td align=left><span datafld="transportation"></span></td>
+	<td align=left><span datafld="marketing"></span></td>
+	<td align=left><span datafld="datestart"></span></td>
+	<td align=left><span datafld="datefinish"></span></td>
+	<td align=left><span datafld="private"></span></td>
+</tr>
+</tbody>
+</table>
+<p>
+</p>
+<script language=vbscript>
+
+Sub selectrecord(oTableRow)
+	vfpData.recordset.AbsolutePosition=oTableRow.RecordNumber
+	HilightTableRow("green")
+	rem parent.Frames("Frame2").datafilter(vfpData.recordset.Fields(0).Value)
+End sub
+
+Sub tblvfpData_onreadystatechange()
+	if tblvfpData.readyState = "complete" then
+		vfpData_onrowenter = HandleRowEnter()
+	end if
+End sub
+
+Function HandleRowEnter()
+	HilightTableRow("green")
+End function 
+
+Sub vfpData_onrowexit()
+	HilightTableRow("")
+End sub
+
+Sub HilightTableRow(cColor)
+	nRow = vfpData.recordset.AbsolutePosition
+	nPage = vfpData.recordset.AbsolutePage
+	nPageMax = tblvfpData.rows.length-1
+	nPageRows = tblvfpData.datapagesize
+	if nPageMax < 1 then
+		exit sub
+	end if
+	nRow = nRow MOD nPageRows
+	if nRow = 0 then
+		nRow = nPageMax
+	end if
+	if nRow > nPageRows then
+		nRow = 1
+	end if
+	tblvfpData.rows(nPageMax).style.backgroundColor = ""
+	tblvfpData.rows(nRow).style.backgroundColor = cColor
+End sub
+
+</script>
+
+<script language=vbs>
+' Page methods for use with Tab Data Control
+
+Sub PagePrevious
+	 tblvfpData.previousPage()
+	nPageSize = 0 - ( tblvfpData.rows.length-1)
+	nCurrentPos =   vfpData.recordset.AbsolutePosition
+	if nCurrentPos+nPageSize > 0 then
+		vfpData.recordset.Move nPageSize
+	else
+		vfpData.recordset.MoveFirst
+	end if	
+	rem parent.Frames("Frame2").datafilter(vfpData.recordset.Fields(0).Value)
+End Sub
+
+Sub PageNext
+	 tblvfpData.nextPage()
+	nPageSize = tblvfpData.rows.length-1
+	nCurrentPos =  vfpData.recordset.AbsolutePosition
+	if nCurrentPos+nPageSize <  vfpData.recordset.RecordCount then
+		vfpData.recordset.Move nPageSize
+	else
+		vfpData.recordset.MoveLast
+	end if	
+	rem parent.Frames("Frame2").datafilter(vfpData.recordset.Fields(0).Value)
+End Sub
+
+</script>
+
+<script language=vbs>
+
+Dim cField
+Dim lSortAscend
+cField = ""
+lSortAscend = True
+
+Sub tblvfpdataheader_OnClick
+	Dim cID
+	cID = window.event.srcElement.ID
+	if cID = cField then
+		lSortAscend = Not lSortAscend
+	else
+		cField = cId
+		lSortAscend = true
+	end if
+	if lSortAscend = True then
+		vfpData.SortColumn = "+" & cField
+	else
+		vfpData.SortColumn = "-" & cField
+	end if
+	vfpData.Reset()
+	rem parent.Frames("Frame2").datafilter(vfpData.recordset.Fields(0).Value)
+End Sub
+
+</script>
+
+</body>
+</html>
